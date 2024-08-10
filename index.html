@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" onkeypress="jump()">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box" id="box">
+      <div class="score" id="score">Score : 0</div>
+      <img src="mobil.jpg" alt="" id="mobil" />
+      <img src="kaktus.jpg" alt="" id="kaktus" />
+      <div class="roadContainer" id="roadContainer">
+        <img src="road.png" alt="" />
+      </div>
+    </div>
+  </body>
+  <script>
+    const char = document.getElementById("mobil");
+    const kaktus = document.getElementById("kaktus");
+    const playerScore = document.getElementById("score");
+
+    let score = 0;
+    let interval = null;
+
+    let jumlahScore = () => {
+      score++;
+      playerScore.innerHTML = "Score : ${score}";
+    };
+
+    function jump() {
+      if (char.classList != "animate") {
+        char.classList.add("animate");
+      }
+      setTimeout(function () {
+        char.classList.remove("animate");
+      }, 500);
+      let score = 0;
+      interval = setInterval(jumlahScore, 100);
+    }
+
+    const ifHitKaktus = setInterval(function () {
+      const charTop = parseInt(
+        window.getComputedStyle(char).getPropertyValue("top")
+      );
+      const kaktusLeft = parseInt(
+        window.getComputedStyle(kaktus).getPropertyvalue("left")
+      );
+      if (kaktusLeft < 90 && kaktusLeft > 0 && charTop >= 60) {
+        kaktus.style.animation = "none";
+        kaktus.style.display = "none";
+        if (confirm("mobil kamu nabrak, ingin ulang?")) {
+          window.location.reload();
+        }
+      }
+    });
+  </script>
+</html>
